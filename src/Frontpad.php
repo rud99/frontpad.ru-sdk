@@ -114,7 +114,7 @@ class Frontpad
         return (object)[
             'ok'          => $data->result === 'success',
             'status_code' => $response->getStatusCode(),
-            'response '   => $response,
+            'response'   => $response,
             'data'        => $data
         ];
     }
