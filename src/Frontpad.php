@@ -44,6 +44,26 @@ class Frontpad
     }
 
     /**
+     * Метод предназначен для передачи заказа из интернет-магазина или приложения.
+     *
+     * @param array $order
+     * @return object
+     */
+    public function newOrderFromArray(array $order)
+    {
+        return $this->call(function () use ($order) {
+            $form_params = $order;
+            $form_params['secret'] = $this->secret;
+
+            $request = $this->client->post('?new_order', [
+                'form_params' => $form_params
+            ]);
+
+            return $this->prepareResponse($request);
+        });
+    }
+
+    /**
      * Метод предназначен для получения информации о клиенте, форма проверки может быть установлена
      * в личном кабинете интернет-магазина.
      * Запрещается циклический поиск клиентов.
