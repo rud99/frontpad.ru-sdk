@@ -4,6 +4,7 @@ namespace Kolirt\Frontpad;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Facades\Cache;
 
 class Frontpad
 {
@@ -12,15 +13,25 @@ class Frontpad
     private $api_endpoint = 'https://app.frontpad.ru/api/index.php';
     private $secret;
 
-    public function __construct($secret)
+    public function __construct($secret, array $proxy_list = [], $proxy_cache = 0)
     {
         $this->secret = $secret;
-        $this->client = new Client([
+
+        $options = [
             'base_uri' => $this->api_endpoint,
             'headers'  => [
                 'Accept' => 'application/json'
             ]
-        ]);
+        ];
+
+        if (count($proxy_list) > 0) {
+            $proxy = Cache::remember('frontpad.proxy', $proxy_cache, function () use ($proxy_list) {
+                return $proxy_list[array_rand($proxy_list, 1)];
+            });
+            $options['proxy'] = $proxy;
+        }
+
+        $this->client = new Client($options);
     }
 
     /**
