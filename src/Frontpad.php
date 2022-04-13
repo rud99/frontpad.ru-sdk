@@ -12,6 +12,7 @@ class Frontpad
     private $client;
     private $api_endpoint = 'https://app.frontpad.ru/api/index.php';
     private $secret;
+    private $proxy;
 
     public function __construct($secret, array $proxy_list = [], $proxy_cache = 0)
     {
@@ -25,10 +26,10 @@ class Frontpad
         ];
 
         if (count($proxy_list) > 0) {
-            $proxy = Cache::remember('frontpad.proxy', $proxy_cache, function () use ($proxy_list) {
+            $this->proxy = Cache::remember('frontpad.proxy', $proxy_cache, function () use ($proxy_list) {
                 return $proxy_list[array_rand($proxy_list, 1)];
             });
-            $options['proxy'] = $proxy;
+            $options['proxy'] = $this->proxy;
         }
 
         $this->client = new Client($options);
@@ -158,6 +159,11 @@ class Frontpad
             $response = $exception->getResponse();
             return $this->prepareResponse($response);
         }
+    }
+
+    public function getProxy()
+    {
+        return $this->proxy;
     }
 
 }
