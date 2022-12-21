@@ -25,6 +25,8 @@ class Order
     private $hook_status = [];
     private $affiliate;
     private $point;
+    private $channel;
+
 
     /**
      * @param mixed $name
@@ -207,6 +209,16 @@ class Order
     }
 
     /**
+     * @param mixed $channel
+     * @return Order
+     */
+    public function setChannel($channel)
+    {
+        $this->channel = $channel;
+        return $this;
+    }
+
+    /**
      * @param Product $product
      * @return $this
      */
@@ -236,6 +248,7 @@ class Order
             'hook_status' => $this->hook_status,
             'affiliate'   => $this->affiliate,
             'point'       => $this->point,
+            'channel'     => $this->channel,
         ];
 
         $this->street && $result['street'] = $this->street;
