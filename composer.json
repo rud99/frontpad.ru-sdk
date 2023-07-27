@@ -1,0 +1,29 @@
+{
+  "name": "kolirt/frontpad.ru-sdk",
+  "description": "sdk for frontpad.ru",
+  "keywords": [
+    "sdk",
+    "frontpad.ru"
+  ],
+  "license": "MIT",
+  "version": "0.0.5",
+  "authors": [
+    {
+      "name": "kolirt"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "> 6.0.0"
+  },
+  "autoload": {
+    "files": [
+      "src/helpers.php"
+    ],
+    "psr-4": {
+      "Kolirt\\Frontpad\\": "src"
+    }
+  },
+  "extra": {
+    "laravel": {}
+  }
+}
