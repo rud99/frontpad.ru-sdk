@@ -17,7 +17,7 @@ $order->setApart('920');
 $order->setDescr('Comment');
 $order->setSaleAmount(100);
 $order->addHookStatus(10);
-$order->setHookUrl('https://example.com/webhook');
+$order->setHookUrl('https://example.com/webhook'); // optional
 $order->setAffiliate(20);
 $order->setPoint(30);
 $order->setPerson(4);

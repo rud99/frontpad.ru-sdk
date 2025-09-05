@@ -276,7 +276,6 @@ class Order
         $this->sale_amount && $result['sale_amount'] = $this->sale_amount;
         $this->hook_url && $result['hook_url'] = $this->hook_url;
 
-
         $product = [];
         $product_kol = [];
         $product_price = [];
