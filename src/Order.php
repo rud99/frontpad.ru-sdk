@@ -27,6 +27,7 @@ class Order
     private $affiliate;
     private $point;
     private $channel;
+    private $certificate;
 
 
     /**
@@ -230,6 +231,16 @@ class Order
     }
 
     /**
+     * @param mixed $certificate
+     * @return Order
+     */
+    public function setCertificate($certificate)
+    {
+        $this->certificate = $certificate;
+        return $this;
+    }
+
+    /**
      * @param Product $product
      * @return $this
      */
@@ -275,6 +286,7 @@ class Order
         $this->sale && $result['sale'] = $this->sale;
         $this->sale_amount && $result['sale_amount'] = $this->sale_amount;
         $this->hook_url && $result['hook_url'] = $this->hook_url;
+        $this->certificate && $result['certificate'] = $this->certificate;
 
         $product = [];
         $product_kol = [];

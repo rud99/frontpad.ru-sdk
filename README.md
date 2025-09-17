@@ -22,6 +22,7 @@ $order->setAffiliate(20);
 $order->setPoint(30);
 $order->setPerson(4);
 $order->setDateTime('2016-08-15 15:30:00');
+$order->setCertificate('CERT-12345'); // номер сертификата
 
 
 $order->adTag(10);
