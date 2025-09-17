@@ -23,6 +23,7 @@ class Order
     private $sale_amount;
     private $tags = [];
     private $hook_status = [];
+    private $hook_url;
     private $affiliate;
     private $point;
     private $channel;
@@ -219,6 +220,16 @@ class Order
     }
 
     /**
+     * @param mixed $hook_url
+     * @return Order
+     */
+    public function setHookUrl($hook_url)
+    {
+        $this->hook_url = $hook_url;
+        return $this;
+    }
+
+    /**
      * @param Product $product
      * @return $this
      */
@@ -263,7 +274,7 @@ class Order
         $this->datetime && $result['datetime'] = $this->datetime;
         $this->sale && $result['sale'] = $this->sale;
         $this->sale_amount && $result['sale_amount'] = $this->sale_amount;
-
+        $this->hook_url && $result['hook_url'] = $this->hook_url;
 
         $product = [];
         $product_kol = [];
