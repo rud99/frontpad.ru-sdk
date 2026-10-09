@@ -3,8 +3,11 @@
 namespace Kolirt\Frontpad;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Cache;
+use Psr\Http\Message\ResponseInterface;
 
 class Frontpad
 {
@@ -155,10 +158,40 @@ class Frontpad
     {
         try {
             return $function();
-        } catch (\Exception $exception) {
-            $response = $exception->getResponse();
+        } catch (TransferException $exception) {
+            $response = $this->responseFrom($exception);
+
+            if ($response === null) {
+                throw $exception;
+            }
+
             return $this->prepareResponse($response);
         }
+    }
+
+    /**
+     * Достаёт ответ из исключения Guzzle, если он там вообще есть.
+     *
+     * ConnectException в Guzzle 7 унаследован от TransferException и метода
+     * getResponse() не имеет, а ResponseException из Guzzle 8 не является
+     * RequestException — поэтому проверяем, а не предполагаем.
+     *
+     * @param \Throwable $exception
+     * @return \Psr\Http\Message\ResponseInterface|null
+     */
+    private function responseFrom($exception)
+    {
+        if ($exception instanceof RequestException) {
+            return $exception->hasResponse() ? $exception->getResponse() : null;
+        }
+
+        if (method_exists($exception, 'getResponse')) {
+            $response = $exception->getResponse();
+
+            return $response instanceof ResponseInterface ? $response : null;
+        }
+
+        return null;
     }
 
     public function getProxy()
