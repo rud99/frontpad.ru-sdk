@@ -142,7 +142,7 @@ class Frontpad
 
     private function prepareResponse(ResponseInterface $response)
     {
-        $data = $response->getBody()->getContents();
+        $data = (string)$response->getBody();
         $data = is_json($data) ? json_decode($data) : $data;
 
         return (object)[
