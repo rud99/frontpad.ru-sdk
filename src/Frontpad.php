@@ -5,7 +5,6 @@ namespace Kolirt\Frontpad;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\TransferException;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Cache;
 use Psr\Http\Message\ResponseInterface;
 
@@ -141,7 +140,7 @@ class Frontpad
         });
     }
 
-    private function prepareResponse(Response $response)
+    private function prepareResponse(ResponseInterface $response)
     {
         $data = $response->getBody()->getContents();
         $data = is_json($data) ? json_decode($data) : $data;
