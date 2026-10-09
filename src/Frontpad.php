@@ -147,7 +147,7 @@ class Frontpad
         $data = is_json($data) ? json_decode($data) : $data;
 
         return (object)[
-            'ok'          => $data->result === 'success',
+            'ok'          => is_object($data) && isset($data->result) && $data->result === 'success',
             'status_code' => $response->getStatusCode(),
             'response'   => $response,
             'data'        => $data
